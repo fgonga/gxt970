@@ -6,7 +6,7 @@ use gxt970::protocol::{self, BLOCK_OFFSET, GENERAL_LEN, POLLING_BYTE};
 use std::path::PathBuf;
 
 #[derive(Parser)]
-#[command(name = "gxt970", about = "Configuração do rato Trust GXT 970 no macOS")]
+#[command(name = "gxt970", about = "Configuração do rato Trust GXT 970")]
 struct Cli {
     #[command(subcommand)]
     command: Command,

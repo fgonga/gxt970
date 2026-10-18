@@ -2,7 +2,7 @@
 name = "gxt970"
 version = "0.1.0"
 edition = "2024"
-description = "Configuração do rato Trust GXT 970 no macOS, sem o software oficial"
+description = "Configuração do rato Trust GXT 970 em Windows, macOS e Linux, sem o software oficial"
 license = "MIT"
 repository = "https://github.com/fgonga/gxt970"
 

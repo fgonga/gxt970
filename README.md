@@ -1,8 +1,20 @@
 # gxt970
 
-Configuração do rato Trust GXT 970 no macOS, sem o software oficial (que só existe para Windows).
+[![CI](https://github.com/fgonga/gxt970/actions/workflows/ci.yml/badge.svg)](https://github.com/fgonga/gxt970/actions/workflows/ci.yml)
+
+Configuração do rato Trust GXT 970 em **Windows, macOS e Linux**, sem o software oficial.
 
 Inclui uma aplicação gráfica e uma linha de comandos em Rust que falam directamente com o rato por HID. O protocolo foi recuperado a partir do instalador oficial para Windows.
+
+## Plataformas
+
+| Sistema | Compila e passa nos testes (CI) | Testado com o rato |
+|---|---|---|
+| macOS | sim | sim (Apple M1 Pro) |
+| Windows | sim | ainda não |
+| Linux | sim | ainda não |
+
+O mesmo código corre nos três sistemas (hidapi e egui). Relatos de teste em Windows e Linux são bem-vindos nas issues.
 
 ![Atribuição de botões](docs/screenshot-buttons.png)
 
@@ -21,11 +33,20 @@ Inclui uma aplicação gráfica e uma linha de comandos em Rust que falam direct
 
 ## Requisitos
 
-- macOS (testado num Mac com Apple M1 Pro)
 - Rust 1.88 ou mais recente
 - Rato Trust GXT 970 (USB `145F:02B9`)
 
-Na primeira utilização, o macOS pede autorização em Definições do Sistema > Privacidade e Segurança > Monitorização de entrada. Autoriza o terminal ou a aplicação que corre o programa.
+Por sistema:
+
+- **macOS:** na primeira utilização, autoriza o terminal ou a aplicação em Definições do Sistema > Privacidade e Segurança > Monitorização de entrada.
+- **Linux:** instala `libudev-dev` e `pkg-config` para compilar. Para usar sem `sudo`, instala a regra udev e volta a ligar o rato:
+  ```sh
+  sudo cp packaging/99-gxt970.rules /etc/udev/rules.d/
+  sudo udevadm control --reload-rules && sudo udevadm trigger
+  ```
+- **Windows:** não precisa de driver. Fecha o software oficial da Trust, se estiver aberto.
+
+Também há binários já compilados para os três sistemas nos artefactos de cada execução do [CI](https://github.com/fgonga/gxt970/actions).
 
 ## Instalação
 
@@ -40,7 +61,7 @@ cargo build --release
 Aplicação gráfica:
 
 ```sh
-./target/release/gxt970-ui
+./target/release/gxt970-ui        # Windows: target\\release\\gxt970-ui.exe
 ```
 
 Escolhe o perfil no topo, a secção no painel direito e carrega em Aplicar. A aplicação grava o perfil, confirma a gravação e põe o rato a usar esse perfil.
@@ -93,6 +114,7 @@ O mapa completo está em `src/general.rs`, `src/buttons.rs` e `src/protocol.rs`.
 - Reposição de fábrica para DPI e iluminação
 - DPI separado para X e Y
 - Confirmar no rato a escala de brilho e velocidade (0 a 4)
+- Testar com o rato em Windows e Linux
 
 ## Licença
 
