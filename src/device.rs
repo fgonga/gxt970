@@ -16,6 +16,13 @@ const RETRIES: usize = 3;
 const RETRY_DELAY: Duration = Duration::from_millis(200);
 pub const STEP_DELAY: Duration = Duration::from_millis(40);
 
+#[cfg(target_os = "macos")]
+const PERMISSION_HINT: &str = "Se o erro for de permissões, autorize o terminal em Definições do Sistema > Privacidade e Segurança > Monitorização de entrada.";
+#[cfg(target_os = "linux")]
+const PERMISSION_HINT: &str = "Se o erro for de permissões, instale a regra udev de packaging/99-gxt970.rules e volte a ligar o rato.";
+#[cfg(not(any(target_os = "macos", target_os = "linux")))]
+const PERMISSION_HINT: &str = "Feche o software oficial da Trust, se estiver aberto, e tente de novo.";
+
 pub struct Mouse {
     dev: HidDevice,
 }
@@ -31,11 +38,7 @@ impl Mouse {
                     && d.usage_page() == VENDOR_USAGE_PAGE
             })
             .ok_or_else(|| anyhow!("rato Trust GXT 970 não encontrado"))?;
-        let dev = info.open_device(&api).map_err(|e| {
-            anyhow!(
-                "não foi possível abrir o rato ({e}). Se o erro for de permissões, autorize o terminal em Definições do Sistema > Privacidade e Segurança > Monitorização de entrada"
-            )
-        })?;
+        let dev = info.open_device(&api).map_err(|e| anyhow!("não foi possível abrir o rato ({e}). {PERMISSION_HINT}"))?;
         Ok(Self { dev })
     }
 
