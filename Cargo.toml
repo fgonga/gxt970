@@ -1,0 +1,24 @@
+[package]
+name = "gxt970"
+version = "0.1.0"
+edition = "2024"
+description = "Configuração do rato Trust GXT 970 no macOS, sem o software oficial"
+license = "MIT"
+repository = "https://github.com/fgonga/gxt970"
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+hidapi = { version = "2.6.7", features = ["macos-shared-device"] }
+craft-ui = { git = "https://github.com/storytold/craft-libs", rev = "5c874d51eeb3de70e735c8ce87a59a7dedd47675" }
+eframe = "0.36"
+egui = "0.36"
+image = { version = "0.25", default-features = false, features = ["png"] }
+
+[[bin]]
+name = "gxt970-ui"
+path = "src/bin/gxt970-ui/main.rs"
+
+[dev-dependencies]
+egui_kittest = { version = "0.36", features = ["wgpu"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
