@@ -61,7 +61,7 @@ cargo build --release
 Aplicação gráfica:
 
 ```sh
-./target/release/gxt970-ui        # Windows: target\\release\\gxt970-ui.exe
+./target/release/gxt970-ui        # Windows: target\release\gxt970-ui.exe
 ```
 
 Escolhe o perfil no topo, a secção no painel direito e carrega em Aplicar. A aplicação grava o perfil, confirma a gravação e põe o rato a usar esse perfil.
